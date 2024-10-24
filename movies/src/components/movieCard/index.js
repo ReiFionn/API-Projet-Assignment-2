@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
 import StarRateIcon from "@mui/icons-material/StarRate";
+import WatchLaterIcon from '@mui/icons-material/WatchLater';
 import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid2";
 import img from '../../images/film-poster-placeholder.png';
@@ -46,19 +47,23 @@ export default function MovieCard({ movie, action }) {
   return (
     <Card>
             <CardHeader
-        avatar={
-          movie.favorite ? (
-            <Avatar sx={{ backgroundColor: 'red' }}>
-              <FavoriteIcon />
-            </Avatar>
-          ) : null
-        }
-        title={
-          <Typography variant="h5" component="p">
-            {movie.title}{" "}
-          </Typography>
-        }
-      />
+              avatar={
+                (movie.favorite || movie.mustWatch) ? (
+                  <div style={{ display: 'flex', gap: '8px' }}>
+                    {movie.favorite && (
+                      <Avatar sx={{ backgroundColor: 'red' }}>
+                        <FavoriteIcon />
+                      </Avatar>
+                    )}
+                    {movie.mustWatch && (
+                      <Avatar sx={{ backgroundColor: 'blue' }}>
+                        <WatchLaterIcon />
+                      </Avatar>
+                    )}
+                  </div>
+                ) : null
+              }
+            />
       <CardMedia
         sx={{ height: 500 }}
         image={
