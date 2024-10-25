@@ -3,11 +3,11 @@ import { getActors } from "../api/tmdb-api";
 import PageTemplate from '../components/templateActorListPage';
 import { useQuery } from 'react-query';
 import Spinner from '../components/spinner';
-import AddToFavoritesIcon from '../components/cardIcons/addToFavorites'
+import AddToFavoriteActorsIcon from '../components/cardIcons/addToFavoriteActors';
 
 const ActorsPage = (props) => {
 
-  const {  data, error, isLoading, isError }  = useQuery('actors', getActors)
+  const {  data, error, isLoading, isError }  = useQuery('actors', getActors);
 
   if (isLoading) {
     return <Spinner />
@@ -19,8 +19,8 @@ const ActorsPage = (props) => {
   const actors = data.results;
 
   // Redundant, but necessary to avoid app crashing.
-  const favorites = actors.filter(m => m.favorite)
-  localStorage.setItem('favorites', JSON.stringify(favorites))
+  const favoriteActors = actors.filter(a => a.favorite)
+  localStorage.setItem('favoriteActors', JSON.stringify(favoriteActors))
   const addToFavoriteActors = (actorId) => true 
 
   return (
@@ -28,7 +28,7 @@ const ActorsPage = (props) => {
       title="Discover Actors"
       actors={actors}
       action={(actor) => {
-        return <AddToFavoritesIcon actor={actor} />
+        return <AddToFavoriteActorsIcon actor={actor} />
       }}
     />
 );

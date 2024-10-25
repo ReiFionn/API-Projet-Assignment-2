@@ -3,22 +3,22 @@ import React, { useState } from "react";
 export const ActorsContext = React.createContext(null);
 
 const ActorsContextProvider = (props) => {
-  const [favorites, setFavorites] = useState( [] )
+  const [favoriteActors, setFavoriteActors] = useState( [] )
 
   const addToFavoriteActors = (actor) => {
-    let newFavorites = [];
-    if (!favorites.includes(actor.id)){
-      newFavorites = [...favorites, actor.id];
+    let newFavoriteActors = [];
+    if (!favoriteActors.includes(actor.id)){
+        newFavoriteActors = [...favoriteActors, actor.id];
     }
     else{
-      newFavorites = [...favorites];
+        newFavoriteActors = [...favoriteActors];
     }
-    setFavorites(newFavorites)
+    setFavoriteActors(newFavoriteActors)
   };
-  console.log(favorites)
+  console.log(favoriteActors)
   
   const removeFromFavoriteActors = (actor) => {
-    setFavorites( favorites.filter(
+    setFavoriteActors( favoriteActors.filter(
       (mId) => mId !== actor.id
     ) )
   };
@@ -26,7 +26,7 @@ const ActorsContextProvider = (props) => {
   return (
     <ActorsContext.Provider
       value={{
-        favorites,
+        favoriteActors,
         addToFavoriteActors,
         removeFromFavoriteActors,
       }}
