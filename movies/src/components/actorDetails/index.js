@@ -82,7 +82,7 @@ const ActorDetails = ({ actor }) => {  // Don't miss this!
       </Fab>
 
       <Drawer anchor="top" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
-          <ActorRoles actorId={actor.id} />
+          <ActorRoles actor={actor} />
       </Drawer>
 
       </>

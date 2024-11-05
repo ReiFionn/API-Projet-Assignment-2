@@ -162,18 +162,18 @@ export const getActorImages = ({ queryKey }) => {
   });
 };
 
-export const getActorRoles = (args) => {
-  const [, idPart] = args.queryKey;
-  const { id } = idPart;
+export const getActorRoles = (id) => {
   return fetch(
     `https://api.themoviedb.org/3/person/${id}/movie_credits?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US`
-  ).then((response) => {
-    if (!response.ok) {
-      throw new Error(response.json().message);
-    }
-    return response.json();
-  })
-  .catch((error) => {
-     throw error;
-  });
+  )
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+      return response.json();
+    })
+    .then((data) => data.cast) // Extract only the cast array
+    .catch((error) => {
+      throw error;
+    });
 };
