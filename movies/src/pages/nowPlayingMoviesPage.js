@@ -3,7 +3,9 @@ import { getNowPlayingMovies } from "../api/tmdb-api";
 import PageTemplate from '../components/templateMovieListPage';
 import { useQuery } from 'react-query';
 import Spinner from '../components/spinner';
-import AddToMustWatchIcon from '../components/cardIcons/addToMustWatch'
+import AddToMustWatchIcon from '../components/cardIcons/addToMustWatch';
+import AddToFavoritesIcon from '../components/cardIcons/addToFavorites';
+
 
 const NowPlayingMoviesPage = (props) => {
 
@@ -29,7 +31,10 @@ const NowPlayingMoviesPage = (props) => {
       title="Movies Playing in Theatres Now"
       movies={movies}
       action={(movie) => {
-        return <AddToMustWatchIcon movie={movie} />
+        return <>
+          <AddToMustWatchIcon movie={movie} />
+          <AddToFavoritesIcon movie={movie} />
+        </>
       }}
     />
 );
