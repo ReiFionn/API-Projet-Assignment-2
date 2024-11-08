@@ -18,8 +18,7 @@ const formControl =
   };
 
 export default function FilterActorsCard(props) {
-
-  const { data, error, isLoading, isError } = useQuery("actors", getActors);
+  const {  data, error, isLoading, isError }  = useQuery(['actors', 1], getActors(1));
 
   if (isLoading) {
     return <Spinner />;
