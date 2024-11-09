@@ -15,8 +15,9 @@ import img from '../../images/film-poster-placeholder.png';
 import { Link } from "react-router-dom";
 import Avatar from '@mui/material/Avatar';
 import { MoviesContext } from "../../contexts/moviesContext";
+import SportsMartialArtsIcon from '@mui/icons-material/SportsMartialArts';
 
-export default function MovieCard({ movie, action }) {
+export default function MovieCard({ movie, action, role }) {
   const { favorites, addToFavorites } = useContext(MoviesContext);
   const { mustWatch, addToMustWatch} = useContext(MoviesContext);
 
@@ -84,6 +85,14 @@ export default function MovieCard({ movie, action }) {
               {"  "} {movie.vote_average}{" "}
             </Typography>
           </Grid>
+          {role && (
+            <Grid item xs={12}>
+              <Typography variant="h6" component="p">
+                <SportsMartialArtsIcon fontSize="small" /> 
+                  {role.character || "Unknown role"}
+              </Typography>
+            </Grid>
+          )}
         </Grid>
       </CardContent>
       <CardActions disableSpacing>

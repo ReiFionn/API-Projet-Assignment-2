@@ -85,7 +85,7 @@ const ActorDetails = ({ actor }) => {
       <Grid container spacing={2}>
         {roles.map((role) => (
           <Grid item key={role.id} xs={12} sm={6} md={4} lg={3}>
-            <MovieCard movie={role} action={action} />
+            <MovieCard movie={role} action={action} role={role} />
           </Grid>
         ))}
       </Grid>

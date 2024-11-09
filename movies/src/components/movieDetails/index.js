@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getMovieCast } from "../../api/tmdb-api";
+import { getActorRoles, getMovieCast } from "../../api/tmdb-api";
 import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
@@ -94,7 +94,7 @@ const MovieDetails = ({ movie }) => {  // Don't miss this!
       <Grid container spacing={2}>
         {cast.map((actor) => (
           <Grid item key={actor.id} xs={12} sm={6} md={4} lg={3}>
-            <ActorCard actor={actor} action={action} />
+            <ActorCard actor={actor} action={action} role={actor.character}/>
           </Grid>
         ))}
       </Grid>

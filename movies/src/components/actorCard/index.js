@@ -14,8 +14,9 @@ import img from '../../images/film-poster-placeholder.png';
 import { Link } from "react-router-dom";
 import Avatar from '@mui/material/Avatar';
 import { ActorsContext } from "../../contexts/actorsContext";
+import SportsMartialArtsIcon from '@mui/icons-material/SportsMartialArts';
 
-export default function ActorCard({ actor, action }) {
+export default function ActorCard({ actor, action, role }) {
     const { favoriteActors, addToFavoriteActors } = useContext(ActorsContext);
 
     if (favoriteActors.find((id) => id === actor.id)) {
@@ -67,6 +68,14 @@ export default function ActorCard({ actor, action }) {
                 {"  "} {actor.popularity}{" "}
                 </Typography>
             </Grid>
+            {role && (
+              <Grid item xs={12}>
+                <Typography variant="h6" component="p">
+                  <SportsMartialArtsIcon fontSize="small" /> 
+                    {role || "Unknown role"}
+                </Typography>
+              </Grid>
+            )}
             </Grid>
         </CardContent>
         <CardActions disableSpacing>
