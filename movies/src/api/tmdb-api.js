@@ -177,3 +177,19 @@ export const getActorRoles = (id) => {
       throw error;
     });
 };
+
+export const getMovieCast = (id) => {
+  return fetch(
+    `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US`
+  )
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+      return response.json();
+    })
+    .then((data) => data.cast) // Extract only the cast array
+    .catch((error) => {
+      throw error;
+    });
+};
