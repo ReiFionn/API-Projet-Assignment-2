@@ -16,6 +16,7 @@ import { Link } from "react-router-dom";
 import Avatar from '@mui/material/Avatar';
 import { MoviesContext } from "../../contexts/moviesContext";
 import SportsMartialArtsIcon from '@mui/icons-material/SportsMartialArts';
+import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 
 export default function MovieCard({ movie, action, role }) {
   const { favorites, addToFavorites } = useContext(MoviesContext);
@@ -77,6 +78,12 @@ export default function MovieCard({ movie, action, role }) {
             <Typography variant="h6" component="p">
               <CalendarIcon fontSize="small" />
               {movie.release_date}
+            </Typography>
+          </Grid>
+          <Grid size={{xs: 6}}>
+            <Typography variant="h6" component="p">
+              <WorkspacePremiumIcon fontSize="small" />
+              {movie.certification || "Unknown certification"}
             </Typography>
           </Grid>
           <Grid size={{xs: 6}}>

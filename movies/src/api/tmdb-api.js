@@ -1,15 +1,26 @@
-export const getMovies = (page = 1) => {
-  return fetch(
-    `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&include_adult=false&include_video=false&page=${page}`
-  ).then((response) => {
+export const getMovies = async (page = 1) => {
+  try {
+    const response = await fetch(
+      `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&include_adult=false&include_video=false&page=${page}`
+    );
     if (!response.ok) {
-      throw new Error(response.json().message);
+      throw new Error(await response.json().message);
     }
-    return response.json();
-  })
-  .catch((error) => {
-     throw error
-  });
+    const movieData = await response.json();
+
+    for (const movie of movieData.results) {
+      try {
+        const movieDetails = await getMovie({ queryKey: ["movie", { id: movie.id }] });
+        movie.certification = movieDetails.certification || "Not Rated"; //appends certification to each movie in movieData
+      } catch (error) {
+        movie.certification = "Error"; //troubleshooting
+      }
+    }
+
+    return movieData;
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const getUpcomingMovies = (page = 1) => {
@@ -55,20 +66,38 @@ export const getTopRatedMovies = (page = 1) => {
 };
   
 export const getMovie = (args) => {
-  // console.log(args)
   const [, idPart] = args.queryKey;
   const { id } = idPart;
+
   return fetch(
-    `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.REACT_APP_TMDB_KEY}`
-  ).then((response) => {
-    if (!response.ok) {
-      throw new Error(response.json().message);
-    }
-    return response.json();
-  })
-  .catch((error) => {
-    throw error
-  });
+    `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.REACT_APP_TMDB_KEY}&append_to_response=release_dates`
+  )
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(response.json().message);
+      }
+      return response.json();
+    })
+    .then((movieData) => {
+      const releaseDates = movieData.release_dates?.results || []; //extract certification data from release_dates
+
+      const ieCertification = releaseDates.find(
+        (result) => result.iso_3166_1 === "IE"
+      );
+  
+      const theatricalRelease = ieCertification //find the release type for cinemas
+        ? ieCertification.release_dates.find((date) => date.type === 3)
+        : null;
+          const certification = theatricalRelease ? theatricalRelease.certification : "Not Rated";
+      
+      return { //appends certification to movieData
+        ...movieData,
+        certification,
+      };
+    })
+    .catch((error) => {
+      throw error;
+    });
 };
 
 export const getGenres = async () => {
@@ -192,4 +221,21 @@ export const getMovieCast = (id) => {
     .catch((error) => {
       throw error;
     });
+};
+
+
+export const getCertifications = async () => {
+  return fetch(
+    "https://api.themoviedb.org/3/certification/movie/list?api_key=" +
+      process.env.REACT_APP_TMDB_KEY +
+      "&language=en-US"
+  ).then( (response) => {
+    if (!response.ok) {
+      throw new Error(response.json().message);
+    }
+    return response.json();
+  })
+  .catch((error) => {
+    throw error
+  });
 };

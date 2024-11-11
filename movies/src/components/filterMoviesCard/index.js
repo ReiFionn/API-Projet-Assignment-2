@@ -10,7 +10,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import img from '../../images/kitten bubble.jpg';
-import { getGenres } from "../../api/tmdb-api";
+import { getGenres, getCertifications } from "../../api/tmdb-api";
 import { useQuery } from "react-query";
 import Spinner from '../spinner';
 
@@ -23,31 +23,34 @@ const formControl =
 
 export default function FilterMoviesCard(props) {
 
-  const { data, error, isLoading, isError } = useQuery("genres", getGenres);
+  const { data: genreData, error: genreError, isLoading:genreIsLoading, isError:genreIsError } = useQuery("genres", getGenres);
+  const { data: certificationData, error: certificationError, isLoading:certificationIsLoading, isError:certificationIsError } = useQuery("certifications", getCertifications);
 
-  if (isLoading) {
+  if (genreIsLoading || certificationIsLoading) {
     return <Spinner />;
   }
 
-  if (isError) {
-    return <h1>{error.message}</h1>;
+  if (genreIsError || certificationIsError) {
+    return <h1>{(genreIsError || certificationIsError).message}</h1>;
   }
-  const genres = data.genres;
+
+  const genres = genreData.genres;
   if (genres[0].name !== "All"){
     genres.unshift({ id: "0", name: "All" });
   }
 
-  const handleChange = (e, type, value) => {
-    e.preventDefault();
-    props.onUserInput(type, value); // NEW
-  };
+  const certifications = certificationData.certifications.IE; //Only Irish certifications
 
-  const handleTextChange = (e, props) => {
-    handleChange(e, "name", e.target.value);
+  const handleTextChange = (e) => {
+    props.onUserInput("name", e.target.value);
   };
 
   const handleGenreChange = (e) => {
-    handleChange(e, "genre", e.target.value);
+    props.onUserInput("genre", e.target.value);
+  };
+
+  const handleCertificationChange = (e) => {
+    props.onUserInput("certification", e.target.value);
   };
 
   return (
@@ -83,6 +86,24 @@ export default function FilterMoviesCard(props) {
               return (
                 <MenuItem key={genre.id} value={genre.id}>
                   {genre.name}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </FormControl>
+        <FormControl sx={{...formControl}}>
+          <InputLabel id="certification-label">Certification</InputLabel>
+          <Select
+            labelId="certification-label"
+            id="certification-select"
+            defaultValue=""
+            value={props.certificationFilter}
+            onChange={handleCertificationChange}
+          >
+            {certifications.map((certification) => {
+              return (
+                <MenuItem key={certification.certification} value={certification.certification}>
+                  {certification.certification}
                 </MenuItem>
               );
             })}
