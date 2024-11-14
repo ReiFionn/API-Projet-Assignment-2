@@ -6,14 +6,18 @@ import Grid from "@mui/material/Grid2";
 
 function ActorListPageTemplate({ actors, title, action }) {
   const [nameFilter, setNameFilter] = useState("");
+  const [popularityFilter, setPopularityFilter] = useState([0, 300]);
 
   let displayedActors = actors
-    .filter((m) => {
-      return m.name.toLowerCase().search(nameFilter.toLowerCase()) !== -1;
-    })
+    .filter((m) => m.name.toLowerCase().includes(nameFilter.toLowerCase()))
+    .filter((m) => m.popularity >= popularityFilter[0] && m.popularity <= popularityFilter[1]);
 
     const handleChange = (type, value) => {
+      if (type === "name") {
         setNameFilter(value);
+      } else {
+        setPopularityFilter(value);
+      }
     };
 
   return (
@@ -30,6 +34,7 @@ function ActorListPageTemplate({ actors, title, action }) {
           <FilterCard
             onUserInput={handleChange}
             titleFilter={nameFilter}
+            popularityFilter={popularityFilter}
           />
         </Grid>
         <ActorList action={action} actors={displayedActors}></ActorList>

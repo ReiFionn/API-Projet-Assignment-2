@@ -9,6 +9,9 @@ import img from '../../images/kitten bubble.jpg';
 import { getActors } from "../../api/tmdb-api";
 import { useQuery } from "react-query";
 import Spinner from '../spinner';
+import Slider from '@mui/material/Slider';
+import StarRateIcon from "@mui/icons-material/StarRate";
+
 
 const formControl = 
   {
@@ -37,6 +40,10 @@ export default function FilterActorsCard(props) {
     handleChange(e, "name", e.target.value);
   };
 
+  const handleSliderChange = (e, props) => {
+    handleChange(e, "popularity", e.target.value);
+  };
+
   return (
     <Card 
       sx={{
@@ -56,6 +63,17 @@ export default function FilterActorsCard(props) {
             variant="filled"
             value={props.titleFilter}
             onChange={handleTextChange}
+        />
+        <Typography variant="h6" component="h4">
+          <StarRateIcon fontSize="small" />
+          Popularity
+        </Typography>
+        <Slider
+          value={props.popularityFilter}
+          onChange={handleSliderChange}
+          valueLabelDisplay="auto"
+          min={0}
+          max={300}
         />
       </CardContent>
       <CardMedia

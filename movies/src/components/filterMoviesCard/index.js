@@ -31,7 +31,7 @@ export default function FilterMoviesCard(props) {
   }
 
   if (genreIsError || certificationIsError) {
-    return <h1>{(genreIsError || certificationIsError).message}</h1>;
+    return <h1>{(genreError || certificationError).message}</h1>;
   }
 
   const genres = genreData.genres;

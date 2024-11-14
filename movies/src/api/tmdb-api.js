@@ -226,7 +226,7 @@ export const getActorImages = ({ queryKey }) => {
 export const getActorRoles = async (id) => {
   try {
     const response = await fetch(
-      `https://api.themoviedb.org/3/person/${id}/combined_credits?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US`
+      `https://api.themoviedb.org/3/person/${id}/movie_credits?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US`
     )
     if (!response.ok) {
       throw new Error(response.statusText);
