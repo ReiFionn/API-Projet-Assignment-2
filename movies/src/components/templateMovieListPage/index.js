@@ -8,22 +8,22 @@ function MovieListPageTemplate({ movies, title, action }) {
   const [nameFilter, setNameFilter] = useState("");
   const [genreFilter, setGenreFilter] = useState("0");
   const [certificationFilter, setCertificationFilter] = useState("");
+  const [adultFilter, setAdultFilter] = useState(false);
+  const [videoFilter, setVideoFilter] = useState(false);
   const genreId = Number(genreFilter);
 
   let displayedMovies = movies
-    .filter((m) => {
-      return m.title.toLowerCase().search(nameFilter.toLowerCase()) !== -1;
-    })
-    .filter((m) => {
-      return genreId > 0 ? m.genre_ids.includes(genreId) : true;
-    })
-    .filter((m) => {
-      return certificationFilter ? m.certification === certificationFilter : true;
-    });
+  .filter((m) => m.title.toLowerCase().includes(nameFilter.toLowerCase()))
+  .filter((m) => (genreId > 0 ? m.genre_ids.includes(genreId) : true))
+  .filter((m) => (certificationFilter ? m.certification === certificationFilter : true))
+  .filter((m) => (adultFilter ? m.adult : true))
+  .filter((m) => (videoFilter ? m.video : true))
 
   const handleChange = (type, value) => {
     if (type === "name") setNameFilter(value);
     else if (type === "certification") setCertificationFilter(value);
+    else if (type === "adult") setAdultFilter(value);
+    else if (type === "video") setVideoFilter(value);
     else setGenreFilter(value);
   };
 
@@ -43,6 +43,8 @@ function MovieListPageTemplate({ movies, title, action }) {
             titleFilter={nameFilter}
             genreFilter={genreFilter}
             certificationFilter={certificationFilter}
+            adultFilter={adultFilter}
+            videoFilter={videoFilter}
           />
         </Grid>
         <MovieList action={action} movies={displayedMovies}></MovieList>

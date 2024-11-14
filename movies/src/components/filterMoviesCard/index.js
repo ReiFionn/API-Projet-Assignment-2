@@ -13,6 +13,9 @@ import img from '../../images/kitten bubble.jpg';
 import { getGenres, getCertifications } from "../../api/tmdb-api";
 import { useQuery } from "react-query";
 import Spinner from '../spinner';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 
 const formControl = 
   {
@@ -51,6 +54,14 @@ export default function FilterMoviesCard(props) {
 
   const handleCertificationChange = (e) => {
     props.onUserInput("certification", e.target.value);
+  };
+
+  const handleAdultChange = (e) => {
+    props.onUserInput("adult", e.target.checked);
+  };
+
+  const handleVideoChange = (e) => {
+    props.onUserInput("video", e.target.checked);
   };
 
   return (
@@ -109,6 +120,10 @@ export default function FilterMoviesCard(props) {
             })}
           </Select>
         </FormControl>
+        <FormGroup>
+          <FormControlLabel control={<Checkbox checked={props.adultFilter} onChange={handleAdultChange} />} label="Adult" />
+          <FormControlLabel control={<Checkbox checked={props.videoFilter} onChange={handleVideoChange} />} label="Video" />
+        </FormGroup>
       </CardContent>
       <CardMedia
         sx={{ height: 300 }}
