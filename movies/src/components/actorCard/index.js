@@ -65,7 +65,7 @@ export default function ActorCard({ actor, action, role }) {
             <Grid size={{xs: 6}}>
                 <Typography variant="h6" component="p">
                 <StarRateIcon fontSize="small" />
-                {"  "} {actor.popularity}{" "}
+                {"  "} {actor.popularity.toFixed(2)}{" "}
                 </Typography>
             </Grid>
             {role && (

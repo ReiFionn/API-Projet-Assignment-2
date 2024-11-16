@@ -223,10 +223,11 @@ export const getActorImages = ({ queryKey }) => {
   });
 };
 
+//https://blog.risingstack.com/node-js-async-best-practices-avoiding-callback-hell-node-js-at-scale/
 export const getActorRoles = async (id) => {
   try {
     const response = await fetch(
-      `https://api.themoviedb.org/3/person/${id}/movie_credits?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US`
+      `https://api.themoviedb.org/3/person/${id}/movie_credits?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&page=1`
     )
     if (!response.ok) {
       throw new Error(response.statusText);
@@ -244,7 +245,7 @@ export const getActorRoles = async (id) => {
         movie.certification = "Error"; //troubleshooting
       }
     }
-
+  
     return cast;
     } catch(error) {
       throw error;

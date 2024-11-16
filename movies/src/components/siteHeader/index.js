@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { styled } from '@mui/material/styles';
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { getAuth, signOut } from "firebase/auth";
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
@@ -28,14 +29,31 @@ const SiteHeader = ({ history }) => {
     { label: "Now Playing", path: "/movies/nowplaying" },
     { label: "Upcoming", path: "/movies/upcoming" },
     { label: "Top Rated", path: "/movies/toprated" },
+    { label: "Actors", path: "/actors" },
     { label: "Favorites", path: "/movies/favorites" },
     { label: "Must Watch", path: "/movies/mustwatch" },
-    { label: "Actors", path: "/actors" },
     { label: "Favorite Actors", path: "/actors/favorites" },
+    { label: "Sign In", path: "/signin" },
+    { label: "Sign Out", action: "signOut" }
   ];
 
-  const handleMenuSelect = (pageURL) => {
-    navigate(pageURL, { replace: true });
+  const handleMenuSelect = (option) => {
+    if (option.action === "signOut") {
+      handleSignOut();
+    } else {
+      navigate(option.path, { replace: true });
+    }
+  };
+
+  const handleSignOut = async () => {
+    try {
+      const auth = getAuth();
+      await signOut(auth); 
+      console.log("User signed out successfully.");
+      navigate("/signin", { replace: true });
+    } catch (error) {
+      console.error("Error signing out:", error.message);
+    }
   };
 
   const handleMenu = (event) => {
@@ -81,7 +99,7 @@ const SiteHeader = ({ history }) => {
                   {menuOptions.map((opt) => (
                     <MenuItem
                       key={opt.label}
-                      onClick={() => handleMenuSelect(opt.path)}
+                      onClick={() => handleMenuSelect(opt)}
                     >
                       {opt.label}
                     </MenuItem>
@@ -94,7 +112,7 @@ const SiteHeader = ({ history }) => {
                   <Button
                     key={opt.label}
                     color="inherit"
-                    onClick={() => handleMenuSelect(opt.path)}
+                    onClick={() => handleMenuSelect(opt)}
                   >
                     {opt.label}
                   </Button>
