@@ -46,9 +46,10 @@ export default function FilterActorsCard(props) {
 
   return (
     <Card 
-      sx={{
-        backgroundColor: "rgb(204, 204, 0)"
-      }} 
+    sx={{
+      backgroundColor: "#0B0B0E",
+      color: "#FFFFFF",
+    }}
       variant="outlined">
       <CardContent>
         <Typography variant="h5" component="h1">

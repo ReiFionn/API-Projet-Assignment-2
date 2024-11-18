@@ -22,6 +22,36 @@ import TopRatedMoviesPage from "./pages/topRatedMoviesPage";
 import SignIn from "./components/signIn";
 import SignUp from "./components/signUp";
 import Spinner from './components/spinner';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+
+const myTheme = createTheme({
+  palette: {
+    mode: 'dark',
+    primary: {
+      main: '#5B21D9',
+      contrastText: '#FFFFFF',
+    },
+    secondary: {
+      main: '#41ead4',
+      contrastText: '#0B0B0E',
+    },
+    background: {
+      default: '#0B0B0E',
+      paper: '#4F50C1',
+    },
+    text: {
+      primary: '#FFFFFF',
+      secondary: '#426EE5', 
+    },
+    divider: '#426EE5', 
+  },
+  typography: {
+    h1: { color: '#FFFFFF' }, 
+    h2: { color: '#FFFFFF' },
+    body1: { color: '#FFFFFF' }, 
+  },
+});
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -63,33 +93,36 @@ const ProtectedRoute = ({ children }) => {
 const App = () => {
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <SiteHeader />
-        <MoviesContextProvider>
-          <ActorsContextProvider>
-          <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/signin" element={<SignIn />} />
-              <Route path="/signup" element={<SignUp />} />
-              <Route path="/movies/favorites" element={<ProtectedRoute><FavoriteMoviesPage /></ProtectedRoute>}/>
-              <Route path="/movies/upcoming" element={<ProtectedRoute><UpcomingMoviesPage /></ProtectedRoute>}/>
-              <Route path="/movies/nowplaying" element={<ProtectedRoute><NowPlayingMoviesPage /></ProtectedRoute>}/>
-              <Route path="/movies/mustwatch" element={<ProtectedRoute><MustWatchMoviesPage /></ProtectedRoute>}/>
-              <Route path="/movies/toprated" element={<ProtectedRoute><TopRatedMoviesPage /></ProtectedRoute>}/>
-              <Route path="/reviews/:id" element={<ProtectedRoute><MovieReviewPage /></ProtectedRoute>}/>
-              <Route path="/movies/:id" element={<ProtectedRoute><MoviePage /></ProtectedRoute>}/>
-              <Route path="/actors" element={<ProtectedRoute><ActorsPage /></ProtectedRoute>}/>
-              <Route path="/actors/favorites" element={<ProtectedRoute><FavoriteActorsPage /></ProtectedRoute>}/>
-              <Route path="/actors/:id" element={<ProtectedRoute><ActorDetailPage /></ProtectedRoute>}/>
-              <Route path="/reviews/form" element={<ProtectedRoute><AddMovieReviewPage /></ProtectedRoute>}/>
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-          </ActorsContextProvider>
-        </MoviesContextProvider>
-      </BrowserRouter>
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    <ThemeProvider theme={myTheme}>
+      <CssBaseline />
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <SiteHeader />
+          <MoviesContextProvider>
+            <ActorsContextProvider>
+            <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/signin" element={<SignIn />} />
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="/movies/favorites" element={<ProtectedRoute><FavoriteMoviesPage /></ProtectedRoute>}/>
+                <Route path="/movies/upcoming" element={<ProtectedRoute><UpcomingMoviesPage /></ProtectedRoute>}/>
+                <Route path="/movies/nowplaying" element={<ProtectedRoute><NowPlayingMoviesPage /></ProtectedRoute>}/>
+                <Route path="/movies/mustwatch" element={<ProtectedRoute><MustWatchMoviesPage /></ProtectedRoute>}/>
+                <Route path="/movies/toprated" element={<ProtectedRoute><TopRatedMoviesPage /></ProtectedRoute>}/>
+                <Route path="/reviews/:id" element={<ProtectedRoute><MovieReviewPage /></ProtectedRoute>}/>
+                <Route path="/movies/:id" element={<ProtectedRoute><MoviePage /></ProtectedRoute>}/>
+                <Route path="/actors" element={<ProtectedRoute><ActorsPage /></ProtectedRoute>}/>
+                <Route path="/actors/favorites" element={<ProtectedRoute><FavoriteActorsPage /></ProtectedRoute>}/>
+                <Route path="/actors/:id" element={<ProtectedRoute><ActorDetailPage /></ProtectedRoute>}/>
+                <Route path="/reviews/form" element={<ProtectedRoute><AddMovieReviewPage /></ProtectedRoute>}/>
+                <Route path="*" element={<Navigate to="/" replace />} />
+              </Routes>
+            </ActorsContextProvider>
+          </MoviesContextProvider>
+        </BrowserRouter>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </ThemeProvider>
   );
 };
 

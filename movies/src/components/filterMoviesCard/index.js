@@ -21,7 +21,7 @@ const formControl =
   {
     margin: 1,
     minWidth: 220,
-    backgroundColor: "rgb(255, 255, 255)"
+    backgroundColor: "#0B0B0E"
   };
 
 export default function FilterMoviesCard(props) {
@@ -67,7 +67,8 @@ export default function FilterMoviesCard(props) {
   return (
     <Card 
       sx={{
-        backgroundColor: "rgb(204, 204, 0)"
+        backgroundColor: "#0B0B0E",
+        color: "#FFFFFF",
       }} 
       variant="outlined">
       <CardContent>
@@ -120,10 +121,12 @@ export default function FilterMoviesCard(props) {
             })}
           </Select>
         </FormControl>
-        <FormGroup>
-          <FormControlLabel control={<Checkbox checked={props.adultFilter} onChange={handleAdultChange} />} label="Adult" />
-          <FormControlLabel control={<Checkbox checked={props.videoFilter} onChange={handleVideoChange} />} label="Video" />
-        </FormGroup>
+        <FormControl>
+          <FormGroup>
+            <FormControlLabel control={<Checkbox checked={props.adultFilter} onChange={handleAdultChange} />} label="Adult" />
+            <FormControlLabel control={<Checkbox checked={props.videoFilter} onChange={handleVideoChange} />} label="Video" />
+          </FormGroup>
+        </FormControl>
       </CardContent>
       <CardMedia
         sx={{ height: 300 }}

@@ -35,7 +35,7 @@ export default function ActorCard({ actor, action, role }) {
         <CardHeader
             avatar={
             (actor.favoriteActors) ? (    
-                <Avatar sx={{ backgroundColor: 'red' }}>
+                <Avatar sx={{ backgroundColor: '#426EE5' }}>
                     <FavoriteIcon />
                 </Avatar>
             ) : null

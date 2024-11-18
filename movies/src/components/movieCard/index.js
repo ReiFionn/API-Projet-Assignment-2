@@ -51,12 +51,12 @@ export default function MovieCard({ movie, action, role }) {
                 (movie.favorite || movie.mustWatch) ? (
                   <div style={{ display: 'flex', gap: '8px' }}>
                     {movie.favorite && (
-                      <Avatar sx={{ backgroundColor: 'red' }}>
+                      <Avatar sx={{ backgroundColor: '#426EE5' }}>
                         <FavoriteIcon />
                       </Avatar>
                     )}
                     {movie.mustWatch && (
-                      <Avatar sx={{ backgroundColor: 'blue' }}>
+                      <Avatar sx={{ backgroundColor: '#41ead4' }}>
                         <WatchLaterIcon />
                       </Avatar>
                     )}

@@ -17,13 +17,13 @@ const ActorsPage = (props) => {
   if (isError) {
     return <h1>{error.message}</h1>
   }  
-  const actors = data.results;
 
   const handlePageChange = (event, page) => {
     setCurrentPage(page);
   };
 
-  const totalPages = Math.ceil(data.total_results);
+  const actors = data.results.slice(0,17); //limit the number of actors on a page
+  const totalPages = Math.ceil(data.total_results/17); //total number of pages needed to fit all the actors, if the limit of 17 actors per page is applied
 
   // Redundant, but necessary to avoid app crashing.
   const favoriteActors = actors.filter(a => a.favorite)
