@@ -18,8 +18,10 @@ The content of this repository is a ReactJS Web Application that pulls data from
 + **Silder for filtering actors based on popularity** - A range slider that takes on two values to filter the actors displayed per page based on if their popularity rating falls within the range specified
 + **Checkbox to filter adult movies** - Filters only movies on the current page that have the adult tag set to true
 + **Checkbox to filter movies that include videos** - Filters only movies on the current page that have the video tag set to true
++ **Dropdown to filter movies by their Irish certification** - Filters movies based on their certification (if they have one), which can also be seen on the movie's card
 + **Firebase authentication functionality for sign up, sign in and sign out** - Created a Firebase project, connected it to React using it's credentials, set up a sign in and sign up page, along with specifying sign up, sign in and sign out functions.
 + **Protected routes that require an account signed in to access** - When trying to access a protected route without logging in, the user is directed to the sign in page instead
++ **Additional details** - Many previous components have been updated in some way, e.g. movie cards
 + **New theme and styles** - A lovely new colour scheme :]
   
 ## Setup requirements.
